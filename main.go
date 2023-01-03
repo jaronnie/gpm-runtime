@@ -10,7 +10,7 @@ import (
 func main() {
 	logx.Logger()
 
-	if len(os.Args) < 1 {
+	if len(os.Args) <= 1 {
 		panic(errors.New("empty command"))
 	}
 
@@ -25,13 +25,13 @@ func main() {
 
 	exit := make(chan bool, 0)
 
-	if err := internal.RunCommand(command, args...); err != nil {
-		logx.Errorf("Error running for command: %v\n", err)
+	if err := internal.ProcessTask(); err != nil {
+		logx.Errorf("Error running for process task: %v\n", err)
 		return
 	}
 
-	if err := internal.ProcessTask(); err != nil {
-		logx.Errorf("Error running for process task: %v\n", err)
+	if err := internal.RunCommand(command, args...); err != nil {
+		logx.Errorf("Error running for command: %v\n", err)
 		return
 	}
 
