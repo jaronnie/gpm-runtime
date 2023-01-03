@@ -2,3 +2,4 @@ gpm-runtime
 gpm-runtime-arm64
 .idea
 dist/
+Makefile
