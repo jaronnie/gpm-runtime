@@ -9,7 +9,7 @@ v1:
   go install github.com/jaronnie/gpm-runtime@v1.0.0
   
 v2:
-  go install github.com/jaronnie/gpm-runtime@v2.0.0  
+  go install github.com/jaronnie/gpm-runtime/v2@v2.0.0  
 ```
 
 ## Usage(v2)
