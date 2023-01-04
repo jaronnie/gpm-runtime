@@ -1,22 +1,30 @@
 package internal
 
 import (
-	"github.com/jaronnie/gpm-runtime/utilx/server"
-	"github.com/rdsutbbp/logx"
-	"github.com/shirou/gopsutil/process"
 	"syscall"
 	"time"
+
+	"github.com/rdsutbbp/logx"
+	"github.com/shirou/gopsutil/process"
+
+	"github.com/jaronnie/gpm-runtime/v2/utilx/server"
 )
 
 const ProcessTaskValue = "process-task"
 
-func ProcessTask() error {
+type Options struct {
+	RecycleZombiePeriod int
+}
+
+func ProcessTask(options *Options) error {
+	logx.Debugf("Start to do process task server")
+
 	svr, err := server.NewSvr(ProcessTaskValue, func(msg interface{}, num int) (resp interface{}, err error) {
 		return nil, nil
 	}, []server.TimedTask{
 		{
 			Task: recycleZombieProcess,
-			Time: time.Minute * 1,
+			Time: time.Duration(options.RecycleZombiePeriod) * time.Second,
 		},
 	})
 
@@ -30,6 +38,8 @@ func ProcessTask() error {
 }
 
 func recycleZombieProcess(worker int) (err error) {
+	logx.Debugf("Start to recycle zombie process")
+
 	processes, err := process.Processes()
 	if err != nil {
 		logx.Errorf("get processes meet error. Err: [%v]", err)
@@ -50,6 +60,7 @@ func recycleZombieProcess(worker int) (err error) {
 				logx.Errorf("syscall wait pid [%d]. Err: [%v]", v.Pid, err)
 				continue
 			}
+			logx.Infof("Zombie process with PID [%d] has been recycled.", v.Pid)
 		}
 	}
 	return nil

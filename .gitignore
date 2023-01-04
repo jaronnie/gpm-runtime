@@ -3,3 +3,5 @@ gpm-runtime-arm64
 .idea
 dist/
 Makefile
+log
+tools
