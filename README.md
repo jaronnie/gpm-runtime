@@ -4,6 +4,6 @@ process manager in container using go language to manage process with solving zo
 
 ## Usage
 
-You can use `gpm-runtime npm run docs:dev` instead of `npm run docs:dev`
+You can use `gpm-runtime run -- npm run docs:dev` instead of `npm run docs:dev`
 
 It just recycles zombie process.
