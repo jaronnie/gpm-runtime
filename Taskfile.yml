@@ -2,8 +2,10 @@ version: "3"
 
 tasks:
   install:
+    deps:
+      - build
     cmds:
-      - go install
+      - cp dist/gpm-runtime_{{OS}}_{{ARCH}}/gpm-runtime $GOBIN
     silent: true
   fmt:
     cmds:
